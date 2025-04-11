@@ -75,7 +75,7 @@ public class GifGenerator {
     public static void generateFramesByBlockSize(Block image, ErrorMeasurement.ErrorMethod method, double threshold, int minBlockSize) throws IOException {
         int width = image.getWidth();
         int height = image.getHeight();
-        int maxBlockArea = (height/2) * (width/2); // min area untuk gambar 1 pixel 
+        int maxBlockArea = (height/2) * ((width+2)/2); // min area untuk gambar 1 pixel 
 
         //inputan
         Compressor baseCompressor = new Compressor(image, method, threshold, minBlockSize);
@@ -97,7 +97,7 @@ public class GifGenerator {
         double logEnd = Math.log(maxBlockArea);
         double logStep = (logStart - logEnd) / (maxDepth - 1);
 
-        for (int i = 0; i < maxDepth; i++) {
+        for (int i = 1; i < maxDepth; i++) {
             double logValue = logStart - (maxDepth - i) * logStep;
             int currentMinBlockArea = (int) Math.exp(logValue);
             //System.out.println("Current min block area: " + currentMinBlockArea);
